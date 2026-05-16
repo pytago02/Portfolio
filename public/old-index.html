@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Đinh Hoàng Trung Khánh — Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Josefin+Sans:wght@300;400;600&family=Noto+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">ĐHTK<sup>portfolio</sup></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#" class="nav-cv" download>
+    Download CV
+  </a>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mmenu">
+  <a href="#about" onclick="closeM()">About</a>
+  <a href="#skills" onclick="closeM()">Skills</a>
+  <a href="#experience" onclick="closeM()">Experience</a>
+  <a href="#projects" onclick="closeM()">Projects</a>
+  <a href="#contact" onclick="closeM()">Contact</a>
+</div>
+
+<!-- ════════════════════════
+     HERO
+════════════════════════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag reveal">
+        <span class="hero-tag-dot"></span>
+        Frontend Developer &nbsp;·&nbsp; Lập trình viên giao diện
+      </div>
+
+      <h1 class="hero-name reveal d1">
+        Đinh Hoàng<br>
+        <span class="line-italic">Trung Khánh</span>
+      </h1>
+
+      <div class="hero-role-block reveal d2">
+        <div class="hero-role-line"></div>
+        <div>
+          <div class="hero-role-en">Crafting interfaces that people love to use</div>
+          <div class="hero-role-vi">Xây dựng giao diện người dùng yêu thích</div>
+        </div>
+      </div>
+
+      <div class="hero-btns reveal d3">
+        <a href="#projects" class="btn-solid">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          View Projects · Xem dự án
+        </a>
+        <a href="#contact" class="btn-ghost">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact me · Liên hệ
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-right reveal d4">
+      <div class="hero-available">
+        <div class="avail-dot"></div>
+        Open to work · Đang tìm việc
+      </div>
+      <div class="hero-loc">📍 Hà Nội, Việt Nam</div>
+    </div>
+  </div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">React <span class="star">✦</span></div>
+    <div class="ticker-item">TypeScript <span class="star">✦</span></div>
+    <div class="ticker-item">Next.js <span class="star">✦</span></div>
+    <div class="ticker-item">Tailwind <span class="star">✦</span></div>
+    <div class="ticker-item">Vue.js <span class="star">✦</span></div>
+    <div class="ticker-item">Figma <span class="star">✦</span></div>
+    <div class="ticker-item">Node.js <span class="star">✦</span></div>
+    <div class="ticker-item">Git <span class="star">✦</span></div>
+    <div class="ticker-item">React <span class="star">✦</span></div>
+    <div class="ticker-item">TypeScript <span class="star">✦</span></div>
+    <div class="ticker-item">Next.js <span class="star">✦</span></div>
+    <div class="ticker-item">Tailwind <span class="star">✦</span></div>
+    <div class="ticker-item">Vue.js <span class="star">✦</span></div>
+    <div class="ticker-item">Figma <span class="star">✦</span></div>
+    <div class="ticker-item">Node.js <span class="star">✦</span></div>
+    <div class="ticker-item">Git <span class="star">✦</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     ABOUT
+════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <!-- Index column -->
+      <div class="about-index reveal">
+        <div class="about-num">01</div>
+        <div class="about-label">About / Giới thiệu</div>
+      </div>
+
+      <!-- Main content -->
+      <div>
+        <div class="section-eyebrow reveal">About me · Về tôi</div>
+        <h2 class="about-heading reveal d1">
+          Code đẹp,<br>design <em>tinh tế</em>
+        </h2>
+        <p class="about-body reveal d2">
+          Xin chào! Tôi là <strong>Đinh Hoàng Trung Khánh</strong>, Frontend Developer với niềm đam mê tạo ra những giao diện vừa đẹp mắt vừa hoạt động mượt mà.
+        </p>
+        <p class="about-body reveal d3">
+          I specialise in building <strong>performant, accessible React applications</strong> with a keen eye for design detail. I believe great frontend is the bridge between technology and the people who use it.
+          <br><br>
+          Tôi đặc biệt quan tâm đến <strong>trải nghiệm người dùng</strong>, hiệu năng ứng dụng, và thiết kế giao diện có chiều sâu — không chỉ đẹp trên bề mặt.
+        </p>
+
+        <div class="about-links reveal d4">
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="soc-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="soc-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="#" class="soc-btn" download>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Tải CV / Download CV
+          </a>
+        </div>
+      </div>
+
+      <!-- Photo + stats -->
+      <div class="about-photo-col reveal d2">
+        <div class="about-photo">
+          🧑‍💻
+          <!-- <img src="your-photo.jpg" alt="Đinh Hoàng Trung Khánh" style="width:100%;height:100%;object-fit:cover"> -->
+          <div class="about-photo-label">Hà Nội · Vietnam</div>
+        </div>
+        <div class="about-stats-mini">
+          <div class="mini-stat">
+            <div class="mini-n">2+</div>
+            <div class="mini-l">Năm KN</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-n">15+</div>
+            <div class="mini-l">Dự án</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-n">5k+</div>
+            <div class="mini-l">⭐ GitHub</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-n">∞</div>
+            <div class="mini-l">Cà phê ☕</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════
+     SKILLS
+════════════════════════ -->
+<section id="skills">
+  <div class="container">
+    <div class="skills-top">
+      <div>
+        <div class="section-eyebrow reveal">Skills · Kỹ năng</div>
+        <h2 class="skills-heading reveal d1">Tôi làm việc<br><em style="font-style:italic;color:var(--red)">với gì?</em></h2>
+      </div>
+      <p class="skills-note reveal d2">Chọn đúng công cụ cho đúng việc — không chỉ chọn cái đang trend.<br><span style="color:var(--ink4);font-size:12px">The right tool for the right job.</span></p>
+    </div>
+
+    <div class="skills-table">
+      <div class="skill-cell reveal">
+        <div class="skill-cell-num">01 / 04</div>
+        <div class="skill-cell-icon">⚛️</div>
+        <div class="skill-cell-title">UI Frameworks</div>
+        <div class="skill-cell-vi">Framework giao diện</div>
+        <div class="skill-pills">
+          <span class="pill">React</span><span class="pill">Next.js</span>
+          <span class="pill">Vue 3</span><span class="pill">Nuxt</span>
+          <span class="pill">Astro</span>
+        </div>
+      </div>
+
+      <div class="skill-cell reveal d1">
+        <div class="skill-cell-num">02 / 04</div>
+        <div class="skill-cell-icon">🎨</div>
+        <div class="skill-cell-title">Styling & Design</div>
+        <div class="skill-cell-vi">Thiết kế & CSS</div>
+        <div class="skill-pills">
+          <span class="pill">Tailwind CSS</span><span class="pill">CSS Modules</span>
+          <span class="pill">Framer Motion</span><span class="pill">GSAP</span>
+          <span class="pill">Figma</span><span class="pill">SCSS</span>
+        </div>
+      </div>
+
+      <div class="skill-cell reveal d2">
+        <div class="skill-cell-num">03 / 04</div>
+        <div class="skill-cell-icon">🔧</div>
+        <div class="skill-cell-title">Language & Build</div>
+        <div class="skill-cell-vi">Ngôn ngữ & Build tool</div>
+        <div class="skill-pills">
+          <span class="pill">TypeScript</span><span class="pill">JavaScript ES2024</span>
+          <span class="pill">Vite</span><span class="pill">Webpack</span>
+          <span class="pill">Vitest</span><span class="pill">Storybook</span>
+        </div>
+      </div>
+
+      <div class="skill-cell reveal d3">
+        <div class="skill-cell-num">04 / 04</div>
+        <div class="skill-cell-icon">🚀</div>
+        <div class="skill-cell-title">Backend & DevOps</div>
+        <div class="skill-cell-vi">Backend & Triển khai</div>
+        <div class="skill-pills">
+          <span class="pill">Node.js</span><span class="pill">Express</span>
+          <span class="pill">REST API</span><span class="pill">PostgreSQL</span>
+          <span class="pill">Docker</span><span class="pill">Vercel</span><span class="pill">Git</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════
+     EXPERIENCE
+════════════════════════ -->
+<section id="experience">
+  <div class="container">
+    <div class="exp-layout">
+      <div class="exp-sticky">
+        <div class="section-eyebrow reveal">Experience · Kinh nghiệm</div>
+        <h2 class="exp-heading reveal d1">Hành trình<br>của tôi</h2>
+        <p class="exp-sub reveal d2">From student to developer —<br><em>từ sinh viên đến lập trình viên.</em></p>
+      </div>
+
+      <div class="exp-entries">
+
+        <div class="exp-entry reveal">
+          <div class="exp-side">
+            <div class="exp-dot-ring"></div>
+            <div class="exp-stem"></div>
+          </div>
+          <div>
+            <div class="exp-period">2024 — Hiện tại · Present</div>
+            <div class="exp-role">Frontend Developer</div>
+            <div class="exp-role-vi">Lập trình viên Giao diện</div>
+            <div class="exp-company">Công ty ABC · Full-time</div>
+            <div class="exp-desc">
+              Phát triển và duy trì ứng dụng web cho 30,000+ người dùng. Tối ưu Core Web Vitals đạt điểm 95+ trên Lighthouse. Xây dựng Design System dùng chung cho toàn team.<br><br>
+              <em style="color:var(--ink4)">Building and maintaining web apps for 30k+ users. Achieved 95+ Lighthouse score. Built shared Design System.</em>
+            </div>
+            <div class="exp-chips">
+              <span class="exp-chip">React</span><span class="exp-chip">TypeScript</span>
+              <span class="exp-chip">Next.js</span><span class="exp-chip">Tailwind</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-entry reveal d1">
+          <div class="exp-side">
+            <div class="exp-dot-ring"></div>
+            <div class="exp-stem"></div>
+          </div>
+          <div>
+            <div class="exp-period">2023 — 2024</div>
+            <div class="exp-role">Junior Frontend Developer</div>
+            <div class="exp-role-vi">Lập trình viên Giao diện Mới vào nghề</div>
+            <div class="exp-company">Startup XYZ · Full-time</div>
+            <div class="exp-desc">
+              Tham gia xây dựng 2 sản phẩm từ giai đoạn đầu. Thiết kế và phát triển landing page tăng conversion rate 35%. Làm việc chặt với designer và backend.<br><br>
+              <em style="color:var(--ink4)">Built 2 products from scratch. Designed landing pages that improved conversion by 35%.</em>
+            </div>
+            <div class="exp-chips">
+              <span class="exp-chip">Vue 3</span><span class="exp-chip">Nuxt</span>
+              <span class="exp-chip">SCSS</span><span class="exp-chip">Figma</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-entry reveal d2">
+          <div class="exp-side">
+            <div class="exp-dot-ring"></div>
+            <div class="exp-stem"></div>
+          </div>
+          <div>
+            <div class="exp-period">2022 — 2023</div>
+            <div class="exp-role">Intern Frontend Developer</div>
+            <div class="exp-role-vi">Thực tập sinh Lập trình Giao diện</div>
+            <div class="exp-company">Agency DEF · Part-time</div>
+            <div class="exp-desc">
+              Xây dựng 10+ website cho khách hàng. Học hỏi quy trình làm việc agile, code review, và kỹ năng giao tiếp với khách hàng.<br><br>
+              <em style="color:var(--ink4)">Built 10+ client websites. Learned agile workflow, code review, and client communication.</em>
+            </div>
+            <div class="exp-chips">
+              <span class="exp-chip">HTML/CSS</span><span class="exp-chip">JavaScript</span>
+              <span class="exp-chip">WordPress</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-entry reveal d3">
+          <div class="exp-side">
+            <div class="exp-dot-ring"></div>
+          </div>
+          <div>
+            <div class="exp-period">2019 — 2023</div>
+            <div class="exp-role">Cử nhân Công nghệ Thông tin</div>
+            <div class="exp-role-vi">B.Sc. Information Technology</div>
+            <div class="exp-company">Đại học Bách Khoa Hà Nội · HUST</div>
+            <div class="exp-desc">
+              Tốt nghiệp loại Giỏi. Đồ án tốt nghiệp đạt giải Nhất hackathon toàn trường — ứng dụng hỗ trợ học ngoại ngữ sử dụng AI.<br><br>
+              <em style="color:var(--ink4)">Graduated with distinction. Final project won 1st place at university hackathon — AI language learning app.</em>
+            </div>
+            <div class="exp-chips">
+              <span class="exp-chip">GPA 3.6/4.0</span><span class="exp-chip">Hackathon Winner</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════
+     PROJECTS
+════════════════════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="projects-top">
+      <div>
+        <div class="section-eyebrow reveal">Projects · Dự án</div>
+        <h2 class="projects-heading reveal d1">Những thứ<br>tôi đã xây</h2>
+      </div>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="btn-ghost reveal d2">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        Tất cả trên GitHub · All on GitHub
+      </a>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Featured -->
+      <a href="https://github.com/yourusername/lang-ai" target="_blank" rel="noopener" class="project-item feat reveal">
+        <div class="proj-content">
+          <div class="proj-header">
+            <span class="proj-num">001 / Featured</span>
+            <div class="proj-links">
+              <span class="proj-link" title="GitHub">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </span>
+              <span class="proj-link" title="Live">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </span>
+            </div>
+          </div>
+          <div class="proj-tag">✦ Dự án nổi bật · Featured Project</div>
+          <div class="proj-title">LangAI — Học Ngoại Ngữ</div>
+          <div class="proj-title-vi">AI-Powered Language Learning App</div>
+          <p class="proj-desc">
+            Ứng dụng học ngoại ngữ thông minh sử dụng AI để cá nhân hoá lộ trình học, tạo bài tập theo điểm yếu của từng người, và theo dõi tiến độ theo thời gian thực. Đoạt giải Nhất hackathon toàn trường với 500+ người dùng đang hoạt động.<br><br>
+            <em style="color:var(--ink4)">Smart language learning app using AI to personalise learning paths, generate exercises targeting weak points, and track progress in real time. Won university hackathon 1st place with 500+ active users.</em>
+          </p>
+          <div class="proj-stack">
+            <span class="stk">React</span><span class="stk">TypeScript</span>
+            <span class="stk">Node.js</span><span class="stk">PostgreSQL</span>
+            <span class="stk">Claude API</span><span class="stk">Vercel</span>
+          </div>
+        </div>
+        <div class="proj-visual">🌐</div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+      <!-- Project 2 -->
+      <a href="https://github.com/yourusername/uikit" target="_blank" rel="noopener" class="project-item reveal d1">
+        <div class="proj-header">
+          <span class="proj-num">002</span>
+          <div class="proj-links">
+            <span class="proj-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span>
+          </div>
+        </div>
+        <div class="proj-visual-sm">🎨</div>
+        <div class="proj-tag">Open Source · Mã nguồn mở</div>
+        <div class="proj-title">KhanhUI — Component Library</div>
+        <div class="proj-title-vi">Thư viện Component React</div>
+        <p class="proj-desc">Bộ 50+ React component được thiết kế kỹ lưỡng, hỗ trợ dark/light mode, fully accessible (WCAG AA). 1.2k ⭐ GitHub.</p>
+        <div class="proj-stack">
+          <span class="stk">React</span><span class="stk">TypeScript</span><span class="stk">Storybook</span><span class="stk">npm</span>
+        </div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+      <!-- Project 3 -->
+      <a href="https://github.com/yourusername/devtools" target="_blank" rel="noopener" class="project-item reveal d2">
+        <div class="proj-header">
+          <span class="proj-num">003</span>
+          <div class="proj-links">
+            <span class="proj-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span>
+            <span class="proj-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>
+          </div>
+        </div>
+        <div class="proj-visual-sm">⚡</div>
+        <div class="proj-tag">Tool · Công cụ</div>
+        <div class="proj-title">PerfWatch — Web Vitals Monitor</div>
+        <div class="proj-title-vi">Giám sát hiệu năng trang web</div>
+        <p class="proj-desc">Dashboard realtime theo dõi Core Web Vitals, Lighthouse score và performance budget. Tích hợp CI/CD alerts.</p>
+        <div class="proj-stack">
+          <span class="stk">Next.js</span><span class="stk">Recharts</span><span class="stk">Puppeteer</span>
+        </div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+      <!-- Project 4 -->
+      <a href="https://github.com/yourusername/portfolio-template" target="_blank" rel="noopener" class="project-item reveal d3">
+        <div class="proj-header">
+          <span class="proj-num">004</span>
+          <div class="proj-links">
+            <span class="proj-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span>
+          </div>
+        </div>
+        <div class="proj-visual-sm">📄</div>
+        <div class="proj-tag">Template · Mẫu</div>
+        <div class="proj-title">Portfolio Template</div>
+        <div class="proj-title-vi">Mẫu trang cá nhân miễn phí</div>
+        <p class="proj-desc">Template portfolio miễn phí với 3 theme, responsive hoàn toàn, SEO sẵn có. 800+ lượt fork trên GitHub.</p>
+        <div class="proj-stack">
+          <span class="stk">Astro</span><span class="stk">Tailwind</span><span class="stk">MDX</span>
+        </div>
+        <div class="proj-arrow">→</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════
+     CONTACT
+════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="section-eyebrow reveal" style="justify-content:flex-start">Contact · Liên hệ</div>
+    <div class="contact-grid" style="margin-top:24px">
+      <div class="contact-left">
+        <h2 class="big-heading reveal d1">
+          Cùng tạo ra<br>điều gì đó <em>tuyệt vời</em>
+        </h2>
+        <p class="contact-vi reveal d2">
+          Dù là cơ hội việc làm, dự án freelance, hay chỉ muốn trò chuyện về tech — tôi luôn sẵn sàng lắng nghe.<br>
+          <span style="color:var(--ink4);font-size:13px">Whether it's a job, freelance project, or just a tech chat — I'm always open.</span>
+        </p>
+        <a href="mailto:khanh@example.com" class="contact-email-link reveal d3">
+          khanh@example.com
+        </a>
+      </div>
+
+      <div class="contact-right reveal d2">
+        <div class="contact-row">
+          <div class="cr-label">Email</div>
+          <a href="mailto:khanh@example.com" class="cr-link">khanh@example.com</a>
+        </div>
+        <div class="contact-row">
+          <div class="cr-label">GitHub</div>
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="cr-link">
+            github.com/yourusername
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+        <div class="contact-row">
+          <div class="cr-label">LinkedIn</div>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="cr-link">
+            linkedin.com/in/yourprofile
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+        <div class="contact-row">
+          <div class="cr-label">Location</div>
+          <div class="cr-val">📍 Hà Nội, Việt Nam</div>
+        </div>
+        <div class="contact-row">
+          <div class="cr-label">Status</div>
+          <div class="cr-val" style="display:flex;align-items:center;gap:8px">
+            <span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block"></span>
+            Open to work · Đang tìm việc
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span class="footer-name">Đinh Hoàng Trung Khánh</span>
+  <span class="footer-copy">© 2025 · Designed & built with <span class="footer-red">♥</span> in Hà Nội</span>
+</footer>
+
+<script src="./js/script.js"></script>
+</body>
+</html>

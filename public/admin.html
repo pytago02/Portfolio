@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — Khánh Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F7F4EF;--white:#FDFCFA;--ink:#1A1714;--ink2:#3D3830;--ink3:#8A8178;--ink4:#C4BDB5;
+  --red:#E8552D;--green:#22c55e;--border:rgba(26,23,20,0.1);
+  --ff-ui:'Josefin Sans',sans-serif;--ff-d:'Cormorant Garamond',Georgia,serif;--sidebar:240px;
+}
+body{font-family:var(--ff-ui);background:var(--cream);color:var(--ink);min-height:100vh}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:var(--white);display:flex;align-items:center;justify-content:center;z-index:1000}
+.login-box{width:100%;max-width:400px;padding:48px 40px;border:1px solid var(--border);background:var(--white)}
+.login-logo{font-family:var(--ff-d);font-size:28px;font-weight:600;margin-bottom:8px}
+.login-sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:40px}
+.login-box label{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.login-box input{width:100%;padding:12px 16px;border:1px solid var(--border);background:var(--cream);font-family:var(--ff-ui);font-size:13px;color:var(--ink);margin-bottom:24px;outline:none;transition:border-color .2s}
+.login-box input:focus{border-color:var(--red)}
+.btn-login{width:100%;padding:14px;background:var(--ink);color:var(--white);border:none;cursor:pointer;font-family:var(--ff-ui);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;transition:background .2s}
+.btn-login:hover{background:var(--red)}
+.login-error{margin-top:16px;padding:10px 14px;background:rgba(232,85,45,0.1);color:var(--red);font-size:11px;display:none}
+
+/* APP */
+#app{display:none;min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);background:var(--ink);color:var(--white);display:flex;flex-direction:column;z-index:100}
+.sidebar-logo{padding:28px 24px;font-family:var(--ff-d);font-size:20px;font-weight:600;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-logo span{display:block;font-family:var(--ff-ui);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:4px}
+nav.side-nav{flex:1;padding:16px 0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 24px;cursor:pointer;font-size:11px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .2s,background .2s;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.05)}
+.nav-item.active{color:var(--white);background:rgba(232,85,45,.18)}
+.nav-item.active .nav-dot{background:var(--red)}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0}
+.badge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:600;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center}
+.sidebar-footer{padding:16px 24px;font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.2);border-top:1px solid rgba(255,255,255,.06)}
+.btn-logout{width:100%;margin-top:8px;padding:8px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.4);font-family:var(--ff-ui);font-size:9px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+.main{margin-left:var(--sidebar);padding:40px;min-height:100vh}
+.page{display:none}
+.page.active{display:block}
+
+/* PAGE HEADER */
+.page-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.page-title{font-family:var(--ff-d);font-size:48px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.page-sub{font-size:12px;color:var(--ink3);letter-spacing:.06em;margin-top:6px}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--white);border:1px solid var(--border);padding:24px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.stat-card:hover::before{transform:scaleX(1)}
+.stat-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+.stat-number{font-family:var(--ff-d);font-size:48px;font-weight:600;color:var(--ink);line-height:1;margin:8px 0 4px}
+.stat-number.red{color:var(--red)}
+.stat-hint{font-size:10px;color:var(--ink4)}
+
+/* CONTROLS */
+.controls{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.search-input{flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--border);background:var(--white);font-family:var(--ff-ui);font-size:12px;color:var(--ink);outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--red)}
+.filter-btn{padding:10px 18px;border:1px solid var(--border);background:var(--white);font-family:var(--ff-ui);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{border-color:var(--red);color:var(--red);background:rgba(232,85,45,.04)}
+.btn-export{padding:10px 18px;background:var(--ink);color:var(--white);border:none;font-family:var(--ff-ui);font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-flex;align-items:center;gap:7px}
+.btn-export:hover{background:var(--red)}
+
+/* TABLE */
+.table-wrap{background:var(--white);border:1px solid var(--border);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead{background:var(--cream);border-bottom:1px solid var(--border)}
+th{padding:14px 16px;text-align:left;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+td{padding:16px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--cream)}
+.td-name{font-weight:600;color:var(--ink)}.td-email{color:var(--ink3);font-size:11px;margin-top:2px}
+.td-msg{color:var(--ink2);font-size:12px;line-height:1.5;max-width:320px}
+.td-date{font-size:11px;color:var(--ink4);white-space:nowrap}
+.status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:2px}
+.status-unread{background:rgba(232,85,45,.1);color:var(--red)}
+.status-read{background:rgba(138,129,120,.1);color:var(--ink3)}
+.status-replied{background:rgba(34,197,94,.1);color:#16a34a}
+.status-archived{background:rgba(196,189,181,.1);color:var(--ink4)}
+.action-btns{display:flex;gap:6px}
+.act-btn{padding:5px 10px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:var(--ff-ui);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);transition:all .2s}
+.act-btn:hover{border-color:var(--red);color:var(--red)}
+.act-btn.danger:hover{border-color:#dc2626;color:#dc2626}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,23,20,.5);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);max-width:600px;width:100%;max-height:90vh;overflow-y:auto;border:1px solid var(--border);padding:40px;position:relative}
+.modal-close{position:absolute;top:20px;right:20px;background:none;border:none;cursor:pointer;font-size:20px;color:var(--ink3)}
+.modal-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+.modal-val{font-size:15px;color:var(--ink);margin-bottom:20px}
+.modal-message{font-size:14px;color:var(--ink2);line-height:1.8;white-space:pre-wrap}
+.modal-actions{display:flex;gap:10px;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
+.modal-btn{padding:10px 20px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:var(--ff-ui);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);transition:all .2s}
+.modal-btn:hover{border-color:var(--ink);color:var(--ink)}
+.modal-btn.primary{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.modal-btn.primary:hover{background:var(--red);border-color:var(--red)}
+
+/* CHART */
+.chart-area{background:var(--white);border:1px solid var(--border);padding:28px;margin-bottom:24px}
+.chart-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:24px}
+.bar-chart{display:flex;align-items:flex-end;gap:3px;height:100px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;background:var(--red);opacity:.7;transition:opacity .2s;min-height:2px;border-radius:1px 1px 0 0}
+.bar:hover{opacity:1}
+.bar-label{font-size:8px;color:var(--ink4);text-align:center;writing-mode:vertical-lr;transform:rotate(180deg);height:30px}
+
+/* CONTENT EDITOR */
+.content-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:32px}
+.ctab{padding:12px 24px;border:none;background:none;font-family:var(--ff-ui);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
+.ctab:hover{color:var(--ink)}
+.ctab.active{color:var(--red);border-bottom-color:var(--red)}
+.ctab-panel{display:none}.ctab-panel.active{display:block}
+
+/* Form elements */
+.field-group{background:var(--white);border:1px solid var(--border);padding:28px;margin-bottom:16px}
+.field-group-title{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.field-row.single{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.field input,.field textarea,.field select{padding:10px 12px;border:1px solid var(--border);background:var(--cream);font-family:var(--ff-ui);font-size:12px;color:var(--ink);outline:none;transition:border-color .2s;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--red)}
+.field-hint{font-size:10px;color:var(--ink4)}
+.field input[type=checkbox]{width:16px;height:16px;cursor:pointer}
+.checkbox-row{display:flex;align-items:center;gap:10px}
+.checkbox-row label{font-size:11px;color:var(--ink2);text-transform:none;letter-spacing:0}
+
+/* Array editor */
+.array-editor{display:flex;flex-direction:column;gap:12px}
+.array-item{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--red);position:relative}
+.array-item-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none}
+.array-item-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.array-item-controls{display:flex;gap:6px}
+.array-item-body{padding:16px;border-top:1px solid var(--border);display:none}
+.array-item-body.open{display:block}
+.item-btn{padding:4px 10px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:var(--ff-ui);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);transition:all .2s}
+.item-btn:hover{border-color:var(--red);color:var(--red)}
+.item-btn.danger:hover{border-color:#dc2626;color:#dc2626}
+.add-item-btn{padding:12px;border:1px dashed var(--border);background:transparent;width:100%;font-family:var(--ff-ui);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.add-item-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* Pills editor */
+.pills-editor{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--border);background:var(--cream);min-height:44px}
+.pill-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--white);border:1px solid var(--border);font-size:11px;color:var(--ink2)}
+.pill-tag .rm{cursor:pointer;color:var(--ink4);font-size:14px;line-height:1;transition:color .2s}
+.pill-tag .rm:hover{color:var(--red)}
+.pill-input{border:none;background:transparent;font-family:var(--ff-ui);font-size:12px;color:var(--ink);outline:none;min-width:120px}
+
+/* Save bar */
+.save-bar{position:sticky;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--border);padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:32px;z-index:10}
+.btn-save{padding:12px 32px;background:var(--red);color:var(--white);border:none;font-family:var(--ff-ui);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.btn-save:hover{background:#c9441e}
+.btn-save:disabled{opacity:.5;cursor:not-allowed}
+.btn-reset{padding:12px 20px;border:1px solid var(--border);background:transparent;font-family:var(--ff-ui);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all .2s}
+.btn-reset:hover{border-color:#dc2626;color:#dc2626}
+.save-hint{font-size:10px;color:var(--ink4)}
+
+/* EMPTY / MISC */
+.empty{padding:60px;text-align:center;color:var(--ink4)}
+.empty-icon{font-size:48px;margin-bottom:16px}
+.empty-text{font-family:var(--ff-d);font-size:24px;font-style:italic}
+.pagination{display:flex;gap:6px;margin-top:20px;justify-content:flex-end}
+.pg-btn{padding:8px 14px;border:1px solid var(--border);background:var(--white);cursor:pointer;font-family:var(--ff-ui);font-size:11px;color:var(--ink3);transition:all .2s}
+.pg-btn:hover,.pg-btn.active{border-color:var(--red);color:var(--red)}
+.pg-btn:disabled{opacity:.4;cursor:default}
+.toast{position:fixed;bottom:32px;right:32px;padding:14px 20px;background:var(--ink);color:var(--white);font-size:12px;letter-spacing:.06em;transform:translateY(80px);opacity:0;transition:all .3s;z-index:500}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:#15803d}
+.toast.error{background:#dc2626}
+
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Khánh Admin</div>
+    <div class="login-sub">Portfolio Dashboard</div>
+    <label>Admin Token</label>
+    <input type="password" id="token-input" placeholder="admin_xxxxxxxx..." autocomplete="current-password">
+    <button class="btn-login" onclick="login()">Đăng nhập →</button>
+    <div class="login-error" id="login-error">Token không hợp lệ.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">Khánh<br><span>Admin Panel v2.0</span></div>
+    <nav class="side-nav">
+      <button class="nav-item active" onclick="showPage('dashboard')"><span class="nav-dot"></span> Dashboard</button>
+      <button class="nav-item" onclick="showPage('contacts')">
+        <span class="nav-dot"></span> Tin nhắn
+        <span class="badge" id="unread-badge" style="display:none">0</span>
+      </button>
+      <button class="nav-item" onclick="showPage('content')"><span class="nav-dot"></span> Nội dung</button>
+    </nav>
+    <div class="sidebar-footer">
+      <div>© 2025 · Khánh Portfolio</div>
+      <button class="btn-logout" onclick="logout()">Đăng xuất</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div><div class="page-title">Dashboard</div><div class="page-sub">Tổng quan hoạt động portfolio</div></div>
+        <div id="last-updated" style="font-size:11px;color:var(--ink4)"></div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Tin nhắn mới</div><div class="stat-number red" id="s-unread">—</div><div class="stat-hint">Chưa đọc</div></div>
+        <div class="stat-card"><div class="stat-label">Tổng tin nhắn</div><div class="stat-number" id="s-total">—</div><div class="stat-hint">Tất cả thời gian</div></div>
+        <div class="stat-card"><div class="stat-label">Lượt xem hôm nay</div><div class="stat-number" id="s-views-today">—</div><div class="stat-hint">Page views</div></div>
+        <div class="stat-card"><div class="stat-label">Lượt xem tuần này</div><div class="stat-number" id="s-views-week">—</div><div class="stat-hint">7 ngày qua</div></div>
+      </div>
+      <div class="chart-area"><div class="chart-title">Lượt xem — 30 ngày qua</div><div class="bar-chart" id="bar-chart"></div></div>
+      <div class="page-header" style="margin-top:32px;margin-bottom:20px;padding-bottom:16px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)">Tin nhắn gần đây</div>
+        <button class="filter-btn" onclick="showPage('contacts')">Xem tất cả →</button>
+      </div>
+      <div class="table-wrap" id="recent-table"></div>
+    </div>
+
+    <!-- CONTACTS -->
+    <div class="page" id="page-contacts">
+      <div class="page-header">
+        <div><div class="page-title">Tin nhắn</div><div class="page-sub" id="contacts-sub">Quản lý liên hệ từ portfolio</div></div>
+        <button class="btn-export" onclick="exportCSV()">↓ Xuất CSV</button>
+      </div>
+      <div class="controls">
+        <input class="search-input" id="search-input" placeholder="Tìm theo tên, email, nội dung..." oninput="debounceSearch()">
+        <button class="filter-btn active" data-status="" onclick="setFilter('')">Tất cả</button>
+        <button class="filter-btn" data-status="unread" onclick="setFilter('unread')">Mới</button>
+        <button class="filter-btn" data-status="read" onclick="setFilter('read')">Đã đọc</button>
+        <button class="filter-btn" data-status="replied" onclick="setFilter('replied')">Đã trả lời</button>
+        <button class="filter-btn" data-status="archived" onclick="setFilter('archived')">Lưu trữ</button>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Người gửi</th><th>Chủ đề</th><th>Tin nhắn</th><th>Trạng thái</th><th>Ngày gửi</th><th>Hành động</th></tr></thead>
+        <tbody id="contacts-body"></tbody></table>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- CONTENT EDITOR -->
+    <div class="page" id="page-content">
+      <div class="page-header">
+        <div><div class="page-title">Nội dung</div><div class="page-sub">Chỉnh sửa trực tiếp — cập nhật ngay lên trang portfolio</div></div>
+        <a href="/" target="_blank" class="filter-btn" style="text-decoration:none">Xem trang chính ↗</a>
+      </div>
+
+      <div class="content-tabs">
+        <button class="ctab active" onclick="switchTab('profile')">Thông tin cá nhân</button>
+        <button class="ctab" onclick="switchTab('skills')">Kỹ năng</button>
+        <button class="ctab" onclick="switchTab('experience')">Kinh nghiệm</button>
+        <button class="ctab" onclick="switchTab('projects')">Dự án</button>
+      </div>
+
+      <!-- PROFILE TAB -->
+      <div class="ctab-panel active" id="tab-profile">
+        <div class="field-group">
+          <div class="field-group-title">Thông tin cơ bản</div>
+          <div class="field-row">
+            <div class="field"><label>Họ và tên đầy đủ</label><input type="text" id="p-name"></div>
+            <div class="field"><label>Tên viết tắt (nav logo)</label><input type="text" id="p-name_short" placeholder="ĐHTK"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Chức danh (EN)</label><input type="text" id="p-title_en"></div>
+            <div class="field"><label>Chức danh (VI)</label><input type="text" id="p-title_vi"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Tagline (EN)</label><input type="text" id="p-tagline_en"></div>
+            <div class="field"><label>Tagline (VI)</label><input type="text" id="p-tagline_vi"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Email liên hệ</label><input type="email" id="p-email"></div>
+            <div class="field"><label>Địa điểm</label><input type="text" id="p-location" placeholder="Hà Nội, Việt Nam"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>GitHub URL</label><input type="url" id="p-github"></div>
+            <div class="field"><label>LinkedIn URL</label><input type="url" id="p-linkedin"></div>
+          </div>
+          <div class="checkbox-row" style="margin-top:8px">
+            <input type="checkbox" id="p-available">
+            <label for="p-available" style="font-size:12px">Đang tìm việc (hiển thị badge "Open to work")</label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="field-group-title">Tiểu sử / Bio</div>
+          <div class="field-row single"><div class="field"><label>Bio tiếng Việt</label><textarea id="p-bio_vi" rows="3"></textarea></div></div>
+          <div class="field-row single"><div class="field"><label>Bio tiếng Anh</label><textarea id="p-bio_en" rows="3"></textarea></div></div>
+        </div>
+
+        <div class="field-group">
+          <div class="field-group-title">Số liệu thống kê (About section)</div>
+          <div class="field-row">
+            <div class="field"><label>Năm kinh nghiệm</label><input type="text" id="p-years_exp" placeholder="2+"></div>
+            <div class="field"><label>Số dự án</label><input type="text" id="p-projects_count" placeholder="15+"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>GitHub Stars</label><input type="text" id="p-github_stars" placeholder="5k+"></div>
+          </div>
+        </div>
+
+        <div class="save-bar">
+          <div class="save-hint">Thay đổi sẽ hiển thị ngay trên trang portfolio sau khi lưu.</div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-reset" onclick="resetSection('profile')">↺ Reset mặc định</button>
+            <button class="btn-save" onclick="saveSection('profile')">Lưu thay đổi →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILLS TAB -->
+      <div class="ctab-panel" id="tab-skills">
+        <div class="array-editor" id="skills-editor"></div>
+        <button class="add-item-btn" onclick="addSkill()">＋ Thêm nhóm kỹ năng</button>
+        <div class="save-bar">
+          <div class="save-hint">Mỗi nhóm có thể chứa nhiều tag kỹ năng.</div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-reset" onclick="resetSection('skills')">↺ Reset mặc định</button>
+            <button class="btn-save" onclick="saveSection('skills')">Lưu thay đổi →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPERIENCE TAB -->
+      <div class="ctab-panel" id="tab-experience">
+        <div class="array-editor" id="exp-editor"></div>
+        <button class="add-item-btn" onclick="addExp()">＋ Thêm mục kinh nghiệm</button>
+        <div class="save-bar">
+          <div class="save-hint">Hiển thị theo thứ tự từ trên xuống (mới nhất lên đầu).</div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-reset" onclick="resetSection('experience')">↺ Reset mặc định</button>
+            <button class="btn-save" onclick="saveSection('experience')">Lưu thay đổi →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECTS TAB -->
+      <div class="ctab-panel" id="tab-projects">
+        <div class="array-editor" id="projects-editor"></div>
+        <button class="add-item-btn" onclick="addProject()">＋ Thêm dự án</button>
+        <div class="save-bar">
+          <div class="save-hint">Dự án có "Nổi bật" sẽ hiển thị to hơn ở đầu lưới.</div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-reset" onclick="resetSection('projects')">↺ Reset mặc định</button>
+            <button class="btn-save" onclick="saveSection('projects')">Lưu thay đổi →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MESSAGE MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════
+let token = localStorage.getItem('admin_token') || '';
+let currentPage = 1, currentFilter = '', currentSearch = '', searchTimer;
+let contentData = {}; // loaded from API
+
+const API = '';
+
+// ════════════════════════════════════════════════════
+//  AUTH
+// ════════════════════════════════════════════════════
+async function login() {
+  token = document.getElementById('token-input').value.trim();
+  if (!token) return;
+  try {
+    const res = await fetch(`${API}/api/admin/stats`, { headers: { Authorization: `Bearer ${token}` } });
+    if (res.ok) {
+      localStorage.setItem('admin_token', token);
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadDashboard();
+    } else { document.getElementById('login-error').style.display = 'block'; }
+  } catch { document.getElementById('login-error').style.display = 'block'; }
+}
+function logout() { token = ''; localStorage.removeItem('admin_token'); location.reload(); }
+document.getElementById('token-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+if (token) {
+  fetch(`${API}/api/admin/stats`, { headers: { Authorization: `Bearer ${token}` } })
+    .then(r => { if (r.ok) { document.getElementById('login-screen').style.display = 'none'; document.getElementById('app').style.display = 'block'; loadDashboard(); } else { localStorage.removeItem('admin_token'); token = ''; } }).catch(() => {});
+}
+
+// ════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(`page-${name}`)?.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    const map = { dashboard: 'dashboard', contacts: 'tin nhắn', content: 'nội dung' };
+    if (n.textContent.toLowerCase().includes(map[name])) n.classList.add('active');
+  });
+  if (name === 'contacts') loadContacts();
+  if (name === 'dashboard') loadDashboard();
+  if (name === 'content') loadContentEditor();
+}
+
+// ════════════════════════════════════════════════════
+//  DASHBOARD
+// ════════════════════════════════════════════════════
+async function loadDashboard() {
+  try {
+    const res = await fetch(`${API}/api/admin/stats`, { headers: { Authorization: `Bearer ${token}` } });
+    const { data } = await res.json();
+    document.getElementById('s-unread').textContent      = data.contacts.unread;
+    document.getElementById('s-total').textContent       = data.contacts.total;
+    document.getElementById('s-views-today').textContent = data.views.today;
+    document.getElementById('s-views-week').textContent  = data.views.thisWeek;
+    document.getElementById('last-updated').textContent  = 'Cập nhật: ' + new Date().toLocaleTimeString('vi');
+    const badge = document.getElementById('unread-badge');
+    badge.textContent = data.contacts.unread;
+    badge.style.display = data.contacts.unread > 0 ? 'inline' : 'none';
+    renderChart(data.viewsChart);
+    renderRecentTable(data.recentContacts);
+  } catch(e) { console.error(e); }
+}
+
+function renderChart(rows) {
+  const chart = document.getElementById('bar-chart');
+  if (!rows.length) { chart.innerHTML = '<div style="color:var(--ink4);font-size:12px">Chưa có dữ liệu</div>'; return; }
+  const max = Math.max(...rows.map(r => r.views), 1);
+  chart.innerHTML = rows.map(r => `<div class="bar-wrap" title="${r.date}: ${r.views} views"><div class="bar" style="height:${Math.max((r.views/max)*100,2)}%"></div><div class="bar-label">${r.date.slice(5)}</div></div>`).join('');
+}
+
+function renderRecentTable(rows) {
+  const el = document.getElementById('recent-table');
+  if (!rows.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><div class="empty-text">Chưa có tin nhắn nào</div></div>'; return; }
+  el.innerHTML = `<table><thead><tr><th>Người gửi</th><th>Chủ đề</th><th>Trạng thái</th><th>Ngày</th></tr></thead><tbody>
+    ${rows.map(r => `<tr onclick="viewContact(${r.id})" style="cursor:pointer">
+      <td><div class="td-name">${esc(r.name)}</div><div class="td-email">${esc(r.email)}</div></td>
+      <td style="font-size:13px;color:var(--ink2)">${esc(r.subject||'—')}</td>
+      <td>${statusPill(r.status)}</td>
+      <td class="td-date">${fmtDate(r.created_at)}</td>
+    </tr>`).join('')}
+  </tbody></table>`;
+}
+
+// ════════════════════════════════════════════════════
+//  CONTACTS
+// ════════════════════════════════════════════════════
+async function loadContacts() {
+  const params = new URLSearchParams({ page: currentPage, limit: 20, ...(currentFilter && { status: currentFilter }), ...(currentSearch && { q: currentSearch }) });
+  const res = await fetch(`${API}/api/admin/contacts?${params}`, { headers: { Authorization: `Bearer ${token}` } });
+  const { data, pagination, unreadCount } = await res.json();
+  document.getElementById('contacts-sub').textContent = `${pagination.total} tin nhắn · ${unreadCount} chưa đọc`;
+  const badge = document.getElementById('unread-badge');
+  badge.textContent = unreadCount;
+  badge.style.display = unreadCount > 0 ? 'inline' : 'none';
+  const tbody = document.getElementById('contacts-body');
+  tbody.innerHTML = !data.length
+    ? `<tr><td colspan="6"><div class="empty"><div class="empty-icon">📭</div><div class="empty-text">Không có tin nhắn nào</div></div></td></tr>`
+    : data.map(r => `<tr>
+        <td><div class="td-name">${esc(r.name)}</div><div class="td-email">${esc(r.email)}</div></td>
+        <td style="font-size:13px;color:var(--ink2)">${esc(r.subject||'—')}</td>
+        <td class="td-msg">${esc(r.message).slice(0,100)}${r.message.length>100?'...':''}</td>
+        <td>${statusPill(r.status)}</td>
+        <td class="td-date">${fmtDate(r.created_at)}</td>
+        <td><div class="action-btns">
+          <button class="act-btn" onclick="viewContact(${r.id})">Xem</button>
+          <button class="act-btn" onclick="updateStatus(${r.id},'replied')">✓</button>
+          <button class="act-btn danger" onclick="deleteContact(${r.id})">✕</button>
+        </div></td>
+      </tr>`).join('');
+  const pg = document.getElementById('pagination');
+  if (pagination.pages <= 1) { pg.innerHTML = ''; return; }
+  let html = `<button class="pg-btn" onclick="goPage(${currentPage-1})" ${currentPage<=1?'disabled':''}>‹</button>`;
+  for (let i=1;i<=pagination.pages;i++) html += `<button class="pg-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  html += `<button class="pg-btn" onclick="goPage(${currentPage+1})" ${currentPage>=pagination.pages?'disabled':''}>›</button>`;
+  pg.innerHTML = html;
+}
+function goPage(p) { currentPage = p; loadContacts(); }
+function setFilter(s) { currentFilter=s; currentPage=1; document.querySelectorAll('.filter-btn[data-status]').forEach(b=>b.classList.toggle('active',b.dataset.status===s)); loadContacts(); }
+function debounceSearch() { clearTimeout(searchTimer); searchTimer=setTimeout(()=>{ currentSearch=document.getElementById('search-input').value; currentPage=1; loadContacts(); },300); }
+async function viewContact(id) {
+  const res = await fetch(`${API}/api/admin/contacts/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+  const { data: r } = await res.json();
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-label">Từ</div><div class="modal-val"><strong>${esc(r.name)}</strong> &lt;${esc(r.email)}&gt;</div>
+    <div class="modal-label">Chủ đề</div><div class="modal-val">${esc(r.subject||'(Không có chủ đề)')}</div>
+    <div class="modal-label">Ngày gửi</div><div class="modal-val">${fmtDate(r.created_at,true)}</div>
+    <div class="modal-label">Nội dung</div><div class="modal-message">${esc(r.message)}</div>
+    <div class="modal-actions">
+      <a class="modal-btn primary" href="mailto:${esc(r.email)}?subject=Re: ${esc(r.subject||'Portfolio Contact')}" onclick="updateStatus(${r.id},'replied')">✉ Trả lời email</a>
+      <button class="modal-btn" onclick="updateStatus(${r.id},'archived');closeModal()">Lưu trữ</button>
+      <button class="modal-btn" onclick="deleteContact(${r.id});closeModal()" style="color:#dc2626">Xóa</button>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+  loadContacts();
+}
+function closeModal(e) { if (!e||e.target===document.getElementById('modal')) document.getElementById('modal').classList.remove('open'); }
+async function updateStatus(id, status) {
+  await fetch(`${API}/api/admin/contacts/${id}`,{method:'PATCH',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify({status})});
+  showToast(`Đã cập nhật: ${status}`,'success'); loadContacts(); loadDashboard();
+}
+async function deleteContact(id) {
+  if (!confirm('Xóa tin nhắn này?')) return;
+  await fetch(`${API}/api/admin/contacts/${id}`,{method:'DELETE',headers:{Authorization:`Bearer ${token}`}});
+  showToast('Đã xóa tin nhắn','success'); loadContacts(); loadDashboard();
+}
+function exportCSV() {
+  fetch(`${API}/api/admin/export`,{headers:{Authorization:`Bearer ${token}`}})
+    .then(r=>r.blob()).then(blob=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`contacts_${new Date().toISOString().slice(0,10)}.csv`;a.click();});
+}
+
+// ════════════════════════════════════════════════════
+//  CONTENT EDITOR
+// ════════════════════════════════════════════════════
+let activeTab = 'profile';
+
+async function loadContentEditor() {
+  try {
+    const res  = await fetch(`${API}/api/content`, { headers: { Authorization: `Bearer ${token}` } });
+    const json = await res.json();
+    contentData = json.data;
+    renderProfileTab(contentData.profile);
+    renderSkillsTab(contentData.skills);
+    renderExpTab(contentData.experience);
+    renderProjectsTab(contentData.projects);
+  } catch(e) { showToast('Lỗi tải nội dung','error'); }
+}
+
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.ctab').forEach((b,i) => {
+    const tabs = ['profile','skills','experience','projects'];
+    b.classList.toggle('active', tabs[i] === tab);
+  });
+  document.querySelectorAll('.ctab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tab)?.classList.add('active');
+}
+
+// ── PROFILE ──────────────────────────────────────────
+function renderProfileTab(p) {
+  if (!p) return;
+  const fields = ['name','name_short','title_en','title_vi','tagline_en','tagline_vi','email','location','github','linkedin','bio_vi','bio_en','years_exp','projects_count','github_stars'];
+  fields.forEach(f => {
+    const el = document.getElementById('p-' + f);
+    if (el) el.value = p[f] || '';
+  });
+  document.getElementById('p-available').checked = !!p.available;
+}
+
+function collectProfile() {
+  const fields = ['name','name_short','title_en','title_vi','tagline_en','tagline_vi','email','location','github','linkedin','bio_vi','bio_en','years_exp','projects_count','github_stars'];
+  const obj = {};
+  fields.forEach(f => { obj[f] = document.getElementById('p-' + f)?.value || ''; });
+  obj.available = document.getElementById('p-available').checked;
+  return obj;
+}
+
+// ── SKILLS ───────────────────────────────────────────
+function renderSkillsTab(skills) {
+  if (!skills) return;
+  const editor = document.getElementById('skills-editor');
+  editor.innerHTML = '';
+  skills.forEach((s, i) => editor.appendChild(createSkillItem(s, i)));
+}
+
+function createSkillItem(s, i) {
+  const div = document.createElement('div');
+  div.className = 'array-item';
+  div.dataset.idx = i;
+  div.innerHTML = `
+    <div class="array-item-header" onclick="toggleItem(this)">
+      <span class="array-item-title">${esc(s.icon)} ${esc(s.title)}</span>
+      <div class="array-item-controls">
+        <button class="item-btn danger" onclick="removeItem('skills',${i},event)">Xóa</button>
+        <span style="font-size:12px;color:var(--ink4);padding:0 8px">▼</span>
+      </div>
+    </div>
+    <div class="array-item-body">
+      <div class="field-row">
+        <div class="field"><label>Icon (emoji)</label><input type="text" data-key="icon" value="${esc(s.icon)}" style="width:80px"></div>
+        <div class="field"><label>Số thứ tự</label><input type="text" data-key="num" value="${esc(s.num)}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Tên nhóm (EN)</label><input type="text" data-key="title" value="${esc(s.title)}"></div>
+        <div class="field"><label>Tên nhóm (VI)</label><input type="text" data-key="title_vi" value="${esc(s.title_vi)}"></div>
+      </div>
+      <div class="field"><label>Các kỹ năng (nhấn Enter để thêm)</label>
+        <div class="pills-editor" id="pills-skills-${i}">${s.pills.map(p=>`<span class="pill-tag">${esc(p)}<span class="rm" onclick="removePill(this)">×</span></span>`).join('')}<input class="pill-input" placeholder="Thêm kỹ năng..." onkeydown="addPill(event,'pills-skills-${i}')"></div>
+      </div>
+    </div>`;
+  return div;
+}
+
+function collectSkills() {
+  return Array.from(document.getElementById('skills-editor').querySelectorAll('.array-item')).map((item, i) => ({
+    id: i + 1,
+    icon:     item.querySelector('[data-key="icon"]')?.value || '',
+    num:      item.querySelector('[data-key="num"]')?.value  || '',
+    title:    item.querySelector('[data-key="title"]')?.value || '',
+    title_vi: item.querySelector('[data-key="title_vi"]')?.value || '',
+    pills:    Array.from(item.querySelectorAll('.pill-tag')).map(p => p.textContent.replace('×','').trim()),
+  }));
+}
+
+function addSkill() {
+  const skills = collectSkills();
+  const n = skills.length + 1;
+  const newSkill = { id: n, icon: '🔧', num: `0${n} / 0${n}`, title: 'New Skill Group', title_vi: 'Nhóm kỹ năng mới', pills: [] };
+  skills.push(newSkill);
+  renderSkillsTab(skills);
+  showToast('Đã thêm nhóm kỹ năng mới','success');
+}
+
+// ── EXPERIENCE ───────────────────────────────────────
+function renderExpTab(exp) {
+  if (!exp) return;
+  const editor = document.getElementById('exp-editor');
+  editor.innerHTML = '';
+  exp.forEach((e, i) => editor.appendChild(createExpItem(e, i)));
+}
+
+function createExpItem(e, i) {
+  const div = document.createElement('div');
+  div.className = 'array-item';
+  div.dataset.idx = i;
+  div.innerHTML = `
+    <div class="array-item-header" onclick="toggleItem(this)">
+      <span class="array-item-title">${esc(e.period)} — ${esc(e.role)}</span>
+      <div class="array-item-controls">
+        <button class="item-btn danger" onclick="removeItem('experience',${i},event)">Xóa</button>
+        <span style="font-size:12px;color:var(--ink4);padding:0 8px">▼</span>
+      </div>
+    </div>
+    <div class="array-item-body">
+      <div class="field-row">
+        <div class="field"><label>Thời gian</label><input type="text" data-key="period" value="${esc(e.period)}" placeholder="2024 — Hiện tại"></div>
+        <div class="field"><label>Công ty / Tổ chức</label><input type="text" data-key="company" value="${esc(e.company)}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Chức vụ (EN)</label><input type="text" data-key="role" value="${esc(e.role)}"></div>
+        <div class="field"><label>Chức vụ (VI)</label><input type="text" data-key="role_vi" value="${esc(e.role_vi)}"></div>
+      </div>
+      <div class="field-row single"><div class="field"><label>Mô tả (VI)</label><textarea data-key="desc_vi" rows="3">${esc(e.desc_vi)}</textarea></div></div>
+      <div class="field-row single"><div class="field"><label>Mô tả (EN)</label><textarea data-key="desc_en" rows="3">${esc(e.desc_en)}</textarea></div></div>
+      <div class="field"><label>Tags (nhấn Enter để thêm)</label>
+        <div class="pills-editor" id="pills-exp-${i}">${e.chips.map(c=>`<span class="pill-tag">${esc(c)}<span class="rm" onclick="removePill(this)">×</span></span>`).join('')}<input class="pill-input" placeholder="Thêm tag..." onkeydown="addPill(event,'pills-exp-${i}')"></div>
+      </div>
+    </div>`;
+  return div;
+}
+
+function collectExp() {
+  return Array.from(document.getElementById('exp-editor').querySelectorAll('.array-item')).map((item, i) => ({
+    id: i + 1,
+    period:  item.querySelector('[data-key="period"]')?.value  || '',
+    company: item.querySelector('[data-key="company"]')?.value || '',
+    role:    item.querySelector('[data-key="role"]')?.value    || '',
+    role_vi: item.querySelector('[data-key="role_vi"]')?.value || '',
+    desc_vi: item.querySelector('[data-key="desc_vi"]')?.value || '',
+    desc_en: item.querySelector('[data-key="desc_en"]')?.value || '',
+    chips:   Array.from(item.querySelectorAll('.pill-tag')).map(p => p.textContent.replace('×','').trim()),
+  }));
+}
+
+function addExp() {
+  const exp = collectExp();
+  exp.unshift({ id: 0, period: '2025 — Hiện tại', company: '', role: 'New Role', role_vi: 'Vị trí mới', desc_vi: '', desc_en: '', chips: [] });
+  renderExpTab(exp);
+}
+
+// ── PROJECTS ─────────────────────────────────────────
+function renderProjectsTab(projects) {
+  if (!projects) return;
+  const editor = document.getElementById('projects-editor');
+  editor.innerHTML = '';
+  projects.forEach((p, i) => editor.appendChild(createProjectItem(p, i)));
+}
+
+function createProjectItem(p, i) {
+  const div = document.createElement('div');
+  div.className = 'array-item';
+  div.dataset.idx = i;
+  div.innerHTML = `
+    <div class="array-item-header" onclick="toggleItem(this)">
+      <span class="array-item-title">${esc(p.icon)} ${esc(p.title)}${p.featured?' ⭐':''}</span>
+      <div class="array-item-controls">
+        <button class="item-btn danger" onclick="removeItem('projects',${i},event)">Xóa</button>
+        <span style="font-size:12px;color:var(--ink4);padding:0 8px">▼</span>
+      </div>
+    </div>
+    <div class="array-item-body">
+      <div class="field-row">
+        <div class="field"><label>Icon (emoji)</label><input type="text" data-key="icon" value="${esc(p.icon)}" style="width:80px"></div>
+        <div class="field"><label>Số thứ tự</label><input type="text" data-key="num" value="${esc(p.num)}" placeholder="001"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Tên dự án</label><input type="text" data-key="title" value="${esc(p.title)}"></div>
+        <div class="field"><label>Tên phụ (VI/EN)</label><input type="text" data-key="title_vi" value="${esc(p.title_vi)}"></div>
+      </div>
+      <div class="field-row single"><div class="field"><label>Tag / Nhãn</label><input type="text" data-key="tag" value="${esc(p.tag)}" placeholder="Open Source · Mã nguồn mở"></div></div>
+      <div class="field-row single"><div class="field"><label>Mô tả (VI)</label><textarea data-key="desc_vi" rows="3">${esc(p.desc_vi)}</textarea></div></div>
+      <div class="field-row single"><div class="field"><label>Mô tả (EN)</label><textarea data-key="desc_en" rows="3">${esc(p.desc_en)}</textarea></div></div>
+      <div class="field-row">
+        <div class="field"><label>GitHub URL</label><input type="url" data-key="github" value="${esc(p.github)}"></div>
+        <div class="field"><label>Live URL</label><input type="url" data-key="live" value="${esc(p.live||'')}"></div>
+      </div>
+      <div class="field"><label>Tech stack (nhấn Enter để thêm)</label>
+        <div class="pills-editor" id="pills-proj-${i}">${p.stack.map(s=>`<span class="pill-tag">${esc(s)}<span class="rm" onclick="removePill(this)">×</span></span>`).join('')}<input class="pill-input" placeholder="Thêm công nghệ..." onkeydown="addPill(event,'pills-proj-${i}')"></div>
+      </div>
+      <div class="checkbox-row" style="margin-top:12px">
+        <input type="checkbox" data-key="featured" id="feat-${i}" ${p.featured?'checked':''}>
+        <label for="feat-${i}" style="font-size:12px">Dự án nổi bật (hiển thị lớn ở đầu)</label>
+      </div>
+    </div>`;
+  return div;
+}
+
+function collectProjects() {
+  return Array.from(document.getElementById('projects-editor').querySelectorAll('.array-item')).map((item, i) => ({
+    id: i + 1,
+    icon:     item.querySelector('[data-key="icon"]')?.value     || '',
+    num:      item.querySelector('[data-key="num"]')?.value      || '',
+    title:    item.querySelector('[data-key="title"]')?.value    || '',
+    title_vi: item.querySelector('[data-key="title_vi"]')?.value || '',
+    tag:      item.querySelector('[data-key="tag"]')?.value      || '',
+    desc_vi:  item.querySelector('[data-key="desc_vi"]')?.value  || '',
+    desc_en:  item.querySelector('[data-key="desc_en"]')?.value  || '',
+    github:   item.querySelector('[data-key="github"]')?.value   || '',
+    live:     item.querySelector('[data-key="live"]')?.value     || '',
+    featured: item.querySelector('[data-key="featured"]')?.checked || false,
+    stack:    Array.from(item.querySelectorAll('.pill-tag')).map(p => p.textContent.replace('×','').trim()),
+  }));
+}
+
+function addProject() {
+  const projects = collectProjects();
+  projects.push({ id: projects.length+1, icon:'🚀', num:`00${projects.length+1}`, title:'New Project', title_vi:'Dự án mới', tag:'', desc_vi:'', desc_en:'', github:'', live:'', featured:false, stack:[] });
+  renderProjectsTab(projects);
+}
+
+// ── SHARED HELPERS ────────────────────────────────────
+function toggleItem(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function removeItem(section, idx, event) {
+  event.stopPropagation();
+  if (!confirm('Xóa mục này?')) return;
+  const collectors = { skills: collectSkills, experience: collectExp, projects: collectProjects };
+  const renderers  = { skills: renderSkillsTab, experience: renderExpTab, projects: renderProjectsTab };
+  const arr = collectors[section]();
+  arr.splice(idx, 1);
+  renderers[section](arr);
+}
+
+function addPill(event, containerId) {
+  if (event.key !== 'Enter') return;
+  event.preventDefault();
+  const input = event.target;
+  const val   = input.value.trim();
+  if (!val) return;
+  const span = document.createElement('span');
+  span.className = 'pill-tag';
+  span.innerHTML = `${esc(val)}<span class="rm" onclick="removePill(this)">×</span>`;
+  input.before(span);
+  input.value = '';
+}
+
+function removePill(btn) { btn.parentElement.remove(); }
+
+// ── SAVE / RESET ──────────────────────────────────────
+async function saveSection(key) {
+  const collectors = { profile: collectProfile, skills: collectSkills, experience: collectExp, projects: collectProjects };
+  const value = collectors[key]();
+
+  try {
+    const res  = await fetch(`${API}/api/content/admin/${key}`, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ value })
+    });
+    const json = await res.json();
+    if (json.success) { showToast(`✓ Đã lưu "${key}" — trang portfolio đã cập nhật!`, 'success'); }
+    else              { showToast(json.message || 'Lỗi khi lưu', 'error'); }
+  } catch { showToast('Lỗi kết nối', 'error'); }
+}
+
+async function resetSection(key) {
+  if (!confirm(`Reset section "${key}" về dữ liệu mặc định?`)) return;
+  try {
+    const res  = await fetch(`${API}/api/content/admin/reset/${key}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const json = await res.json();
+    if (json.success) {
+      contentData[key] = json.data;
+      const renderers = { profile: renderProfileTab, skills: renderSkillsTab, experience: renderExpTab, projects: renderProjectsTab };
+      renderers[key](json.data);
+      showToast(`Reset "${key}" thành công`, 'success');
+    }
+  } catch { showToast('Lỗi kết nối', 'error'); }
+}
+
+// ════════════════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════════════════
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function statusPill(s) {
+  const l = {unread:'Mới',read:'Đã đọc',replied:'Đã trả lời',archived:'Lưu trữ'};
+  return `<span class="status-pill status-${s}">${l[s]||s}</span>`;
+}
+function fmtDate(str,full=false) {
+  const d=new Date(str),now=new Date(),diff=(now-d)/1000;
+  if(full) return d.toLocaleString('vi-VN');
+  if(diff<60) return 'Vừa xong';
+  if(diff<3600) return Math.floor(diff/60)+' phút trước';
+  if(diff<86400) return Math.floor(diff/3600)+' giờ trước';
+  return d.toLocaleDateString('vi-VN');
+}
+function showToast(msg,type='') {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast show '+type;
+  setTimeout(()=>t.className='toast',3500);
+}
+</script>
+</body>
+</html>

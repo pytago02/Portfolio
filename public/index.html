@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Đinh Hoàng Trung Khánh — Frontend Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Josefin+Sans:wght@300;400;600&family=Noto+Serif:ital,wght@0,400;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div id="progress-bar"></div>
+
+    <nav id="nav">
+      <a href="#" class="nav-logo" id="nav-logo">ĐHTK<sup>portfolio</sup></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#" class="nav-cv" id="nav-cv" download>Download CV</a>
+      <button class="burger" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <div class="mobile-menu" id="mmenu">
+      <a href="#about" onclick="closeM()">About</a>
+      <a href="#skills" onclick="closeM()">Skills</a>
+      <a href="#experience" onclick="closeM()">Experience</a>
+      <a href="#projects" onclick="closeM()">Projects</a>
+      <a href="#contact" onclick="closeM()">Contact</a>
+    </div>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-tag reveal">
+            <span class="hero-tag-dot"></span
+            ><span id="hero-tag-text"
+              >Frontend Developer · Lập trình viên giao diện</span
+            >
+          </div>
+          <h1 class="hero-name reveal d1" id="hero-name">
+            Đinh Hoàng<br /><span class="line-italic">Trung Khánh</span>
+          </h1>
+          <div class="hero-role-block reveal d2">
+            <div class="hero-role-line"></div>
+            <div>
+              <div class="hero-role-en" id="hero-tagline-en">
+                Crafting interfaces that people love to use
+              </div>
+              <div class="hero-role-vi" id="hero-tagline-vi">
+                Xây dựng giao diện người dùng yêu thích
+              </div>
+            </div>
+          </div>
+          <div class="hero-btns reveal d3">
+            <a href="#projects" class="btn-solid">
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+              View Projects · Xem dự án
+            </a>
+            <a href="#contact" class="btn-ghost">
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Contact me · Liên hệ
+            </a>
+          </div>
+        </div>
+        <div class="hero-right reveal d4">
+          <div class="hero-available" id="hero-available">
+            <div class="avail-dot"></div>
+            <span id="avail-text">Open to work · Đang tìm việc</span>
+          </div>
+          <div class="hero-loc" id="hero-loc">📍 Hà Nội, Việt Nam</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker"><div class="ticker-track" id="ticker-track"></div></div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <div class="about-layout">
+          <div class="about-index reveal">
+            <div class="about-num">01</div>
+            <div class="about-label">About / Giới thiệu</div>
+          </div>
+          <div>
+            <div class="section-eyebrow reveal">About me · Về tôi</div>
+            <h2 class="about-heading reveal d1">
+              Code đẹp,<br />design <em>tinh tế</em>
+            </h2>
+            <p class="about-body reveal d2" id="about-bio-vi"></p>
+            <p class="about-body reveal d3" id="about-bio-en"></p>
+            <div class="about-links reveal d4" id="about-links"></div>
+          </div>
+          <div class="about-photo-col reveal d2">
+            <div class="about-photo">
+              🧑‍💻
+              <div class="about-photo-label" id="about-location-label">
+                Hà Nội · Vietnam
+              </div>
+            </div>
+            <div class="about-stats-mini" id="about-stats"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="container">
+        <div class="skills-top">
+          <div>
+            <div class="section-eyebrow reveal">Skills · Kỹ năng</div>
+            <h2 class="skills-heading reveal d1">
+              Tôi làm việc<br /><em
+                style="font-style: italic; color: var(--red)"
+                >với gì?</em
+              >
+            </h2>
+          </div>
+          <p class="skills-note reveal d2">
+            Chọn đúng công cụ cho đúng việc.<br /><span
+              style="color: var(--ink4); font-size: 12px"
+              >The right tool for the right job.</span
+            >
+          </p>
+        </div>
+        <div class="skills-table" id="skills-table"></div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="container">
+        <div class="exp-layout">
+          <div class="exp-sticky">
+            <div class="section-eyebrow reveal">Experience · Kinh nghiệm</div>
+            <h2 class="exp-heading reveal d1">Hành trình<br />của tôi</h2>
+            <p class="exp-sub reveal d2">
+              From student to developer —<br /><em
+                >từ sinh viên đến lập trình viên.</em
+              >
+            </p>
+          </div>
+          <div class="exp-entries" id="exp-entries"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="container">
+        <div class="projects-top">
+          <div>
+            <div class="section-eyebrow reveal">Projects · Dự án</div>
+            <h2 class="projects-heading reveal d1">
+              Những thứ<br />tôi đã xây
+            </h2>
+          </div>
+          <a
+            id="github-all-link"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            class="btn-ghost reveal d2"
+          >
+            Tất cả trên GitHub · All on GitHub
+          </a>
+        </div>
+        <div class="projects-grid" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-eyebrow reveal" style="justify-content: flex-start">
+          Contact · Liên hệ
+        </div>
+        <div class="contact-grid" style="margin-top: 24px">
+          <div class="contact-left">
+            <h2 class="big-heading reveal d1">
+              Cùng tạo ra<br />điều gì đó <em>tuyệt vời</em>
+            </h2>
+            <p class="contact-vi reveal d2">
+              Dù là cơ hội việc làm, dự án freelance, hay chỉ muốn trò chuyện về
+              tech — tôi luôn sẵn sàng lắng nghe.<br />
+              <span style="color: var(--ink4); font-size: 13px"
+                >Whether it's a job, freelance project, or just a tech chat —
+                I'm always open.</span
+              >
+            </p>
+            <a
+              href="#"
+              class="contact-email-link reveal d3"
+              id="contact-email-link"
+            ></a>
+
+            <!-- Contact Form -->
+            <form
+              class="contact-form reveal d4"
+              id="contact-form"
+              onsubmit="submitContact(event)"
+            >
+              <div class="form-row">
+                <div class="form-field">
+                  <label>Tên của bạn *</label>
+                  <input type="text" id="f-name" placeholder="Nguyễn Văn A" />
+                  <span class="form-error" id="e-name"></span>
+                </div>
+                <div class="form-field">
+                  <label>Email *</label>
+                  <input
+                    type="email"
+                    id="f-email"
+                    placeholder="you@example.com"
+                  />
+                  <span class="form-error" id="e-email"></span>
+                </div>
+              </div>
+              <div class="form-field">
+                <label>Chủ đề</label>
+                <input
+                  type="text"
+                  id="f-subject"
+                  placeholder="Hợp tác dự án, tuyển dụng..."
+                />
+              </div>
+              <div class="form-field">
+                <label>Tin nhắn *</label>
+                <textarea
+                  id="f-message"
+                  rows="5"
+                  placeholder="Xin chào Khánh..."
+                ></textarea>
+                <span class="form-error" id="e-message"></span>
+              </div>
+              <div class="form-success" id="form-success">
+                ✓ Cảm ơn bạn! Tôi sẽ phản hồi trong 24–48 giờ.
+              </div>
+              <button
+                type="submit"
+                class="btn-solid"
+                style="align-self: flex-start"
+                id="submit-btn"
+              >
+                Gửi tin nhắn →
+              </button>
+            </form>
+          </div>
+
+          <div class="contact-right reveal d2" id="contact-right"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span class="footer-name" id="footer-name">Đinh Hoàng Trung Khánh</span>
+      <span class="footer-copy"
+        >© 2025 · Designed & built with <span class="footer-red">♥</span> in Hà
+        Nội</span
+      >
+    </footer>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>
